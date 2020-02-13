@@ -9,7 +9,7 @@ ConfigParser::~ConfigParser()
 {
 }
 
-bool ConfigParser::open(const std::string& path)
+bool ConfigParser::open(const std::string& path) noexcept
 {
     std::vector<std::string> lines;
     this->filePath = path;
@@ -48,12 +48,12 @@ bool ConfigParser::open(const std::string& path)
     return true;
 }
 
-void ConfigParser::findValue(const std::string &str)
+void ConfigParser::findValue(const std::string &str) noexcept
 {
     variables.push_back(str);
 }
 
-void ConfigParser::replace(const std::string &variable, const std::string &value)
+void ConfigParser::replace(const std::string &variable, const std::string &value) noexcept
 {
     std::ifstream readStream(this->filePath, std::ifstream::in | std::ifstream::binary);
     std::ofstream writeStream;
@@ -91,7 +91,7 @@ void ConfigParser::replace(const std::string &variable, const std::string &value
     }
 }
 
-void ConfigParser::clear()
+void ConfigParser::clear() noexcept 
 {
     data.clear();
 }
@@ -116,7 +116,7 @@ std::vector<std::string> ConfigParser::getArray(const std::string& str) const no
     }
 }
 
-void ConfigParser::createFile(const std::string &name, const std::string &data)
+void ConfigParser::createFile(const std::string &name, const std::string &data) noexcept
 {
     std::ofstream writeStream;
 
@@ -131,7 +131,7 @@ void ConfigParser::createFile(const std::string &name, const std::string &data)
     writeStream.close();
 }
 
-bool ConfigParser::parseText(std::vector<std::string>& text)
+bool ConfigParser::parseText(std::vector<std::string>& text) noexcept
 {
     try {
         std::regex regular("^([^\\#].+?\\S)(?:\\[)?(?:\\])?(?:\\=)+?(?:\")?(.+\\b)");
@@ -151,7 +151,7 @@ bool ConfigParser::parseText(std::vector<std::string>& text)
     return true;
 }
 
-void ConfigParser::parseVariable(std::cmatch &match)
+void ConfigParser::parseVariable(std::cmatch &match) noexcept
 {
   auto it = std::find(variables.cbegin(), variables.cend(), match[1]);
 
@@ -160,7 +160,7 @@ void ConfigParser::parseVariable(std::cmatch &match)
   }
 }
 
-void ConfigParser::log(const char *comment, const int line)
+void ConfigParser::log(const char *comment, const int line) noexcept
 {
     std::cout << line << "\t"
               << "ConfigParser: " << comment

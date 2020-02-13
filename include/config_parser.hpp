@@ -14,18 +14,18 @@ public:
     ConfigParser();
     ~ConfigParser();
     
-    bool open(const std::string& path);
-    void findValue(const std::string& str);
-    void replace(const std::string& variable, const std::string& value);
-    void clear();
+    bool open(const std::string& path) noexcept;
+    void findValue(const std::string& str) noexcept;
+    void replace(const std::string& variable, const std::string& value) noexcept;
+    void clear() noexcept;
     
     const std::vector<std::string>& getArrayRef(const std::string& str) const;
     std::vector<std::string> getArray(const std::string& str) const noexcept;
 
-    static void createFile(const std::string& name, const std::string& data);
+    static void createFile(const std::string& name, const std::string& data) noexcept;
 
     template<class... Args>
-    void findValue(const std::string& str, Args&... args) {
+    void findValue(const std::string& str, Args&... args) noexcept {
         variables.push_back(str);
         findValue(args...);
     }
@@ -40,10 +40,10 @@ private:
     std::map<std::string, std::vector<std::string> > data;
 
 private:
-    bool parseText(std::vector<std::string>& text);
-    void parseVariable(std::cmatch& match);
+    bool parseText(std::vector<std::string>& text) noexcept;
+    void parseVariable(std::cmatch& match) noexcept;
 
-    static void log(const char* comment, const int line);
+    static void log(const char* comment, const int line) noexcept;
 };
 
 #endif
