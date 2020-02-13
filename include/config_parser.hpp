@@ -13,11 +13,14 @@ class ConfigParser
 public:
     ConfigParser();
     ~ConfigParser();
-
+    
     bool open(const std::string& path);
     void findValue(const std::string& str);
     void replace(const std::string& variable, const std::string& value);
     void clear();
+    
+    const std::vector<std::string>& getArrayRef(const std::string& str) const;
+    std::vector<std::string> getArray(const std::string& str) const noexcept;
 
     static void createFile(const std::string& name, const std::string& data);
 
@@ -28,13 +31,13 @@ public:
     }
 
     const std::string& operator [] (const std::string& str) {
-        return data[str];
+        return data[str][0];
     }
-
+    
 private:
     std::string filePath;
     std::vector<std::string> variables;
-    std::map<std::string, std::string> data;
+    std::map<std::string, std::vector<std::string> > data;
 
 private:
     bool parseText(std::vector<std::string>& text);

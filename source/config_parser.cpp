@@ -96,6 +96,26 @@ void ConfigParser::clear()
     data.clear();
 }
 
+const std::vector<std::string>& ConfigParser::getArrayRef(const std::string& str) const
+{
+    try {
+        return data.at(str);
+    } catch(const std::exception& e) {
+        log(e.what(), __LINE__);
+        throw std::exception();
+    }
+}
+
+std::vector<std::string> ConfigParser::getArray(const std::string& str) const noexcept
+{
+    try {
+        return data.at(str);
+    } catch(const std::exception& e) {
+        log(e.what(), __LINE__);
+        return std::vector<std::string>();
+    }
+}
+
 void ConfigParser::createFile(const std::string &name, const std::string &data)
 {
     std::ofstream writeStream;
@@ -114,7 +134,7 @@ void ConfigParser::createFile(const std::string &name, const std::string &data)
 bool ConfigParser::parseText(std::vector<std::string>& text)
 {
     try {
-        std::regex regular("^([^\\#].+?\\S)(?:\\=)+?(?:\")?(.+\\b)");
+        std::regex regular("^([^\\#].+?\\S)(?:\\[)?(?:\\])?(?:\\=)+?(?:\")?(.+\\b)");
         std::cmatch result;
 
         for (auto itt = text.cbegin(); itt != text.cend(); ++itt) {
@@ -136,7 +156,7 @@ void ConfigParser::parseVariable(std::cmatch &match)
   auto it = std::find(variables.cbegin(), variables.cend(), match[1]);
 
   if (it != variables.cend()) {
-      data[*it] = match[2];
+      data[*it].push_back(match[2]);
   }
 }
 
