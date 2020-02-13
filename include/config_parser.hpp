@@ -43,7 +43,7 @@ private:
     bool parseText(std::vector<std::string>& text) noexcept;
     void parseVariable(std::cmatch& match) noexcept;
 
-    static void log(const char* comment, const int line) noexcept;
+    static void log(const char* comment, int line) noexcept;
 };
 
 #endif

@@ -160,9 +160,9 @@ void ConfigParser::parseVariable(std::cmatch &match) noexcept
   }
 }
 
-void ConfigParser::log(const char *comment, const int line) noexcept
+void ConfigParser::log(const char *comment, int line) noexcept
 {
-    std::cout << line << "\t"
-              << "ConfigParser: " << comment
+    std::cout << "ConfigParser: " << comment
+              << ": " << line 
               << "\n" << std::flush;
 }
