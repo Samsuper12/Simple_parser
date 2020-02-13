@@ -11,7 +11,7 @@
 class ConfigParser
 {
 public:
-    ConfigParser();
+    ConfigParser() = default;
     ~ConfigParser();
     
     bool open(const std::string& path) noexcept;
